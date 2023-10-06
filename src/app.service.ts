@@ -6,7 +6,10 @@ export class AppService {
     @Inject("winston") private readonly logger:Logger
   ){}
   getHello(): string {
-    this.logger.error("this is log 2");
+    this.logger.error("this is error level");
+    this.logger.warn("this is warn level");
+    this.logger.debug("this is debug level");
+    this.logger.verbose("this is verbose level");
     return 'Hello World!';
   }
   getMsg():string{

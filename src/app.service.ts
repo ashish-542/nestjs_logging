@@ -1,18 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  logger:Logger;
-
-  constructor(){
-    this.logger=new Logger(AppService.name);
-  }
+  constructor(
+    @Inject("winston") private readonly logger:Logger
+  ){}
   getHello(): string {
-    this.logger.log("testing using logger log()");
-    this.logger.error("testing using logger error()");
-    this.logger.warn("testing using logger warn()");
-    this.logger.debug("testing using logger debug()");
-    this.logger.verbose("testing using logger verbose()");
+    this.logger.log("info","this is log 1");
+    this.logger.error("this is log 2");
     return 'Hello World!';
   }
   getMsg():string{

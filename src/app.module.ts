@@ -1,15 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggerInterceptor } from './logger.inteceptor';
+import { WinstonModule } from './winston/winston.module';
 
 @Module({
-  imports: [],
+  imports: [WinstonModule],
   controllers: [AppController],
-  providers: [AppService,
-    {provide:APP_INTERCEPTOR,
-    useClass:LoggerInterceptor}
-  ],
+  providers: [AppService],
 })
-export class AppModule{}
+export class AppModule {}

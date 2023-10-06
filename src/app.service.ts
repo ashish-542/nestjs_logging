@@ -5,7 +5,7 @@ export class AppService {
   logger:Logger;
 
   constructor(){
-    this.logger=new Logger("CUSTOM LOGGER");
+    this.logger=new Logger(AppService.name);
   }
   getHello(): string {
     this.logger.log("testing using logger log()");

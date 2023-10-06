@@ -6,7 +6,6 @@ export class AppService {
     @Inject("winston") private readonly logger:Logger
   ){}
   getHello(): string {
-    this.logger.log("info","this is log 1");
     this.logger.error("this is log 2");
     return 'Hello World!';
   }

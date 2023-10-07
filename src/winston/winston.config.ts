@@ -1,10 +1,17 @@
-import * as winston from "winston";
-export const winstonConfig:winston.LoggerOptions={
-    transports: [
-        new winston.transports.File({ filename: 'src/logs/error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'src/logs/warning.log',level:'warning' }),
-        new winston.transports.File({ filename: 'src/logs/debug.log',level:'debug' }),
-        new winston.transports.File({ filename: 'src/logs/verbose.log',level:'verbose' }),
-        new winston.transports.File({ filename: 'src/logs/combined.log',level:'log' }),
-      ]
-}
+import winston from "winston";
+import { transports } from "winston";
+import {MongoDB} from "winston-mongodb";
+
+export const winstonConfig: winston.LoggerOptions = {
+  transports: [
+    new MongoDB({
+      db: "mongodb://localhost:27017/logDB",
+      level: "info",
+      collection: "logs",
+      options: {
+        useUnifiedTopology: true,
+        family: 4,
+      },
+    }),
+  ],
+};

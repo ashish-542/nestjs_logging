@@ -1,10 +1,10 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
+import { CallHandler, ExecutionContext, Inject, Injectable, NestInterceptor } from "@nestjs/common";
 import {Request,Response} from "express";
 import { tap } from "rxjs";
 import { Logger } from "winston";
 @Injectable()
 export class RequestLoggingInterceptor implements NestInterceptor{
-    constructor(private readonly logger:Logger){}
+    constructor(@Inject('winston')private readonly logger:Logger){}
     intercept(context:ExecutionContext,next:CallHandler){
         const ctx=context.switchToHttp();
         const request=ctx.getRequest<Request>();
@@ -16,14 +16,17 @@ export class RequestLoggingInterceptor implements NestInterceptor{
                 const endTime=Date.now();
                 const elapsed=endTime-startTime;
                 const logEntry={
-                    method:request.method,
-                    url:request.url,
-                    statusCode:response.statusCode,
-                    elapsed:`${elapsed}ms`,
+                    defaultMeta:{
+                        method:request.method,
+                        url:request.url,
+                        statusCode:response.statusCode,
+                        elapsed:`${elapsed}ms`,
+                    },
                     level:"info",
                     message:"log msg"
                 }
-                this.logger.log(logEntry);
+                console.log("🚀 ~ file: request-logging.interceptor.ts:26 ~ RequestLoggingInterceptor ~ tap ~ logEntry:", logEntry)
+                this.logger.error(logEntry);
             })
         )
     }
